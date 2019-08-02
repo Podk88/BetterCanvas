@@ -10,7 +10,7 @@ canvas.grid(sticky="NSEW")
 
 size = (200, 300)
 
-rectangle = canvas.create_rectangle(0, 0, 100, 100)
+rectangle = canvas.create_item(bc.Rectangle, 0, 0, 100, 100)
 rectangle.move(100, 100)
 
 root.mainloop()

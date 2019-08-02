@@ -7,12 +7,13 @@ import tkinter as tk
 class Item():
     """Base class for all item classes."""
 
-    def __init__(self, canvas: tk.Canvas, **kwargs):
+    def __init__(self, canvas: tk.Canvas, id:int, **kwargs):
         """Create an Item instance that belongs to canvas Canvas."""
         super().__init__(**kwargs)
         if canvas == None:
             raise TypeError("Parameter canvas must be not None.")
         self.canvas = canvas
+        self.id = id
 
     def move(self, dx, dy):
         """Moves canvas item by the provided offset."""
@@ -21,10 +22,15 @@ class Item():
 class Rectangle(Item):
     """Rectangle canvas item."""
 
-    def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
-        super().__init__(canvas, **kwargs)
+    def __init__(self, canvas: tk.Canvas, id:int, **kwargs):
+        super().__init__(canvas, id, **kwargs)
+    
+    @classmethod
+    def create_on_canvas(cls, canvas, *bbox, **kwargs):
+        """Creates a rectangle on a given canvas."""
 
         if len(bbox) != 4:
             raise TypeError(f"Rectangle class expects 4 values as its bounding box. {len(bbox)} were given.")
+        return cls(id = canvas.create_rectangle(*bbox, **kwargs), canvas = canvas)
 
-        self.id = canvas.create_rectangle(*bbox, **kwargs)
+

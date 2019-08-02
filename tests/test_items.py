@@ -7,31 +7,36 @@ import BetterCanvas as bc
 class TestItem():
     """Tests for the Item class."""
 
-    def test_init(self, better_canvas_instance):
-        """Tests Item.__init__() method."""
-
+    def test_create_with_null_canvas(self):
+        """Creating items with null canvas should raise a TypeError."""
         with pytest.raises(TypeError):
-            bc.Item(None)
+            bc.Item(id=1, canvas=None)
 
-        item = bc.Item(better_canvas_instance)
-        assert item.canvas == better_canvas_instance
+    def test_init(self, test_canvas):
+        """Tests Item.__init__() assigns id and canvas attributes correctly."""
+        item_id = 1
+        item = bc.Item(id = item_id, canvas = test_canvas,)
+        assert item.canvas == test_canvas
+        assert item.id == item_id
 
 class TestRectangle(TestItem):
-    """Test for the Rectangle class."""
+    """Tests for Rectangle class."""
     
     @pytest.fixture(params=[(0, 0, 100), (0, 0, 100, 100, 100)], ids=['not enough', 'too much'])
-    def invalid_rectangle_params(self, request):
+    def invalid_rectangle_bbox(self, request):
         """Returns invalid rectangle bbox parameters."""
         return request.param
 
-    def test_param_count(self, better_canvas_instance, invalid_rectangle_params):
-        """Tests Rectangle creation with invalid number of parameters."""
+    def test_create_rectangle_with_invalid_bbox(self, test_canvas, invalid_rectangle_bbox):
+        """Creating rectangle without exactly 4 nonkeyword parameters should raises a TypeError."""
         with pytest.raises(TypeError):
-            bc.Rectangle(better_canvas_instance, *invalid_rectangle_params)
+            bc.Rectangle.create_on_canvas(test_canvas, invalid_rectangle_bbox)
 
-    def test_init(self, better_canvas_instance):
-        """Tests Rectangle.__init__() method."""
-        super().test_init(better_canvas_instance)
+    def test_create_on_canvas(self, test_canvas):
+        """Creating a rectangle should return a bc.Rectangle instance."""
+        rectangle = bc.Rectangle.create_on_canvas(test_canvas, 0, 0, 100, 100)
+        assert type(rectangle) == bc.Rectangle
 
-        rectangle = bc.Rectangle(better_canvas_instance, 0, 0, 100, 100)
-        assert hasattr(rectangle, 'id')
+    def test_create_rectangle_item(self, test_canvas):
+        rectangle = test_canvas.create_item(bc.Rectangle, 0, 0, 100, 100)
+        assert type(rectangle) == bc.Rectangle

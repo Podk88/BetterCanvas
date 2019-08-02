@@ -1,4 +1,4 @@
-`BetterCanvas` is wrapper around `tkinter.Canvas` class.
+`BetterCanvas` is a wrapper around `tkinter.Canvas` class.
 
 When you add an items to `tkinter.Canvas` it returns an `int` that serves as a new item identifier. 
 
@@ -17,10 +17,21 @@ canvas.move(item_id, 100, 100)
 Instead `BetterCanvas` returns an object. 
 ```python
 import BetterCanvas as bc
-canvas = bc.BetterCanvas()
-line = canvas.create_line(0, 0, 200, 100)
+better_canvas = bc.BetterCanvas()
+line = better_canvas.create_item(bc.Line, 0, 0, 200, 100)
 ```
 You can invoke methods of this object instead of managing identifiers or tags.
 ```python
 line.move(100, 100)
+```
+
+Define you own items by extending one of the not abstract item classes and implementing `create_on_canvas` method that assigns attributes specific to your item and then invokes `super().create_on_canvas`:
+```python
+class MyRectangle(bc.Rectangle):
+
+    #TODO: PUT EXAMPLE HERE!
+```
+To create an instance of a custom item pass its class to `create_item` method of a `BetterCanvas` object.
+```python
+my_rectangle = better_canvas.create_item(MyRectangle, 0, 0, 100, 100, some_attribute='foo')
 ```

@@ -11,9 +11,9 @@ class TestItem():
         """Tests Item.__init__() method."""
 
         with pytest.raises(TypeError):
-            bc.items.Item(None)
+            bc.Item(None)
 
-        item = bc.items.Item(better_canvas_instance)
+        item = bc.Item(better_canvas_instance)
         assert item.canvas == better_canvas_instance
 
 class TestRectangle(TestItem):
@@ -27,11 +27,11 @@ class TestRectangle(TestItem):
     def test_param_count(self, better_canvas_instance, invalid_rectangle_params):
         """Tests Rectangle creation with invalid number of parameters."""
         with pytest.raises(TypeError):
-            bc.items.Rectangle(better_canvas_instance, *invalid_rectangle_params)
+            bc.Rectangle(better_canvas_instance, *invalid_rectangle_params)
 
     def test_init(self, better_canvas_instance):
         """Tests Rectangle.__init__() method."""
         super().test_init(better_canvas_instance)
 
-        rectangle = bc.items.Rectangle(better_canvas_instance, 0, 0, 100, 100)
+        rectangle = bc.Rectangle(better_canvas_instance, 0, 0, 100, 100)
         assert hasattr(rectangle, 'id')

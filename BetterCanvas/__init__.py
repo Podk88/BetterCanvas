@@ -1,5 +1,5 @@
 from .bettercanvas import BetterCanvas
-from . import items
+from .items import Item, Rectangle
 
 
 

@@ -2,7 +2,7 @@
 import pytest
 import BetterCanvas as bc
 
-class MockItem(bc.items.Item):
+class MockItem(bc.Item):
     """MockItem class, that remembers args and kwargs."""
 
     def __init__(self, canvas, *args, **kwargs):

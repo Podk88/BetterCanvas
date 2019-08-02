@@ -18,6 +18,6 @@ class BetterCanvas(tk.Canvas):
         """Returns new item produced by item_factory.
 
         Args:
-            itemclass: callable that returns new item instance. Will be called
-            with (self, *args, **kwargs) arguments."""
+            item_factory: callable that returns new item instance. 
+            Will be called as item_factory(self, *args, **kwargs)."""
         return item_factory(self, *args, **kwargs)

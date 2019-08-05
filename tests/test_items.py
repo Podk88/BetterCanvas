@@ -18,6 +18,30 @@ class MockItem(bc.Item):
 def mock_item(tk_canvas):
     return MockItem(tk_canvas)
 
+class TestTags():
+    """Tests for tags assignment, deletion, etc."""
+
+    @pytest.fixture(params=[("one", ), ("two", "FOO")], ids = ["single tag", "multiple tags"])
+    def tags(self, request):
+        return request.param
+
+    @pytest.fixture
+    def mock_item(self, test_canvas):
+        return MockItem(test_canvas.canvas)
+
+    def test_init_w_tags(self, tk_canvas, tags):
+        item = MockItem(tk_canvas, tags=tags)
+        assert item.tags == tags
+        for tag in tags:
+            assert tk_canvas.find_withtag(tag) == (item.id, )
+
+    def test_set_no_tags(self, tk_canvas, tags):
+        item = MockItem(tk_canvas, tags=tags)
+
+        item.tags = ()
+        assert item.tags == ()
+        for tag in tags:
+            assert tk_canvas.find_withtag(tag) == ()
 
 
 

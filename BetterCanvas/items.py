@@ -24,6 +24,15 @@ class Item():
         """Creates a new item on self.canvas and returns its id."""
         raise NotImplementedError
 
+    @property
+    def tags(self):
+        """Returns all tags attached to the item."""
+        return self.canvas.gettags(self.id)
+
+    @tags.setter
+    def tags(self, new_tags):
+        """Replaces all tags attached to the item."""
+        self.canvas.itemconfig(self.id, tags=new_tags)
 class Rectangle(Item):
     """Rectangle canvas item."""
 

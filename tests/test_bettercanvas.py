@@ -5,17 +5,26 @@ import BetterCanvas as bc
 class ItemWithoutCreateOnCanvasMethod(bc.Item):
     """MockItem class, that remembers args and kwargs."""
 
-    def __init__(self, canvas, id, *args, **kwargs):
-        super().__init__(canvas, id)
+    def __init__(self, canvas, *args, **kwargs):
+        super().__init__(canvas)
 
 class TestBetterCanvas():
-    def test_create_item_without_create_method(self, test_canvas):
-        """Creating item without a create_on_canvas method should raise TypeError."""
 
-        with pytest.raises(TypeError):
-            test_canvas.create_item(ItemWithoutCreateOnCanvasMethod)
+    item_types = [bc.Rectangle]
 
-    
+    @pytest.fixture(params=item_types, ids=[type.__name__ for type in item_types])
+    def item_type(self, request):
+        return request.param
+
+    def test_create_rectangle(self, test_canvas):
+        """create_rectangle method should return bc.Rectangle object."""
+        rectangle = test_canvas.create_rectangle(0, 0, 100, 100)
+        assert type(rectangle) == bc.Rectangle
+
+    def test_create_item(self, test_canvas, item_type):
+        """create_item method should return an object of the correct type."""
+        new_item = test_canvas.create_item(item_type, 0, 0, 100, 100)
+        assert type(new_item) == item_type
 
 
 

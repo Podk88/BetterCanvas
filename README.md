@@ -18,14 +18,14 @@ Instead `BetterCanvas` returns an object.
 ```python
 import BetterCanvas as bc
 better_canvas = bc.BetterCanvas()
-line = better_canvas.create_item(bc.Line, 0, 0, 200, 100)
+line = better_canvas.create_line(0, 0, 200, 100)
 ```
 You can invoke methods of this object instead of managing identifiers or tags.
 ```python
 line.move(100, 100)
 ```
 
-Define you own items by extending one of the not abstract item classes and implementing `create_on_canvas` method that assigns attributes specific to your item and then invokes `super().create_on_canvas`:
+Define you own items by extending one of the not abstract item classes:
 ```python
 class MyRectangle(bc.Rectangle):
 

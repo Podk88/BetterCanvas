@@ -25,6 +25,9 @@ class Item():
         raise NotImplementedError
 
     @property
+    def bbox(self):
+        return self.canvas.bbox(self.id)
+    @property
     def tags(self):
         """Returns all tags attached to the item."""
         return self.canvas.gettags(self.id)

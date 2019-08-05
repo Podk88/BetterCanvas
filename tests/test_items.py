@@ -18,6 +18,11 @@ class MockItem(bc.Item):
 def mock_item(tk_canvas):
     return MockItem(tk_canvas)
 
+def test_coords(mock_item):
+    assert mock_item.coords == [0, 0, 100, 100]
+    new_coords = [100, 100, 200, 200]
+    mock_item.coords = new_coords
+    assert mock_item.coords == new_coords
 class TestTags():
     """Tests for tags assignment, deletion, etc."""
 

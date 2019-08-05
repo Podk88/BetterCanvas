@@ -27,6 +27,17 @@ class Item():
     @property
     def bbox(self):
         return self.canvas.bbox(self.id)
+
+    @property
+    def coords(self):
+        """Returns the coordinates of the item."""
+        return self.canvas.coords(self.id)
+    
+    @coords.setter
+    def coords(self, *newcoords):
+        """Sets the coordinates of the item."""
+        self.canvas.coords(self.id, *newcoords)
+
     @property
     def tags(self):
         """Returns all tags attached to the item."""

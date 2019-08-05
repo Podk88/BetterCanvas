@@ -13,7 +13,7 @@ class BetterCanvas():
 
     def __getattr__(self, name):
         """Forward attribute look up to inner instance."""
-        if name in vars(self.canvas):
+        if hasattr(self.canvas, name):
             return getattr(self.canvas, name)
         else:
             raise AttributeError(f"{self} has no attribute {name}")
@@ -21,7 +21,7 @@ class BetterCanvas():
     def create_rectangle(self, *bbox, **options) -> items.Rectangle:
         return self.create_item(items.Rectangle, *bbox, **options)
 
-    def create_item(self, item_type, *args, **kwargs):
+    def create_item(self, item_type, *args, **kwargs) -> items.Item:
         """Returns new item of the given type.
 
         Args:

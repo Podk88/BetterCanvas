@@ -23,6 +23,18 @@ def test_coords(mock_item):
     new_coords = [100, 100, 200, 200]
     mock_item.coords = new_coords
     assert mock_item.coords == new_coords
+
+class TestItemConfig():
+
+    def test_unknown_option(self, mock_item):
+        with pytest.raises(AttributeError):
+            mock_item.not_an_option
+
+    def test_fill(self, mock_item):
+        mock_item.fill = 'red'
+        assert mock_item.fill == 'red'
+
+
 class TestTags():
     """Tests for tags assignment, deletion, etc."""
 
@@ -48,13 +60,13 @@ class TestTags():
         for tag in tags:
             assert tk_canvas.find_withtag(tag) == ()
 
-
+    
 
 
 
 class TestRectangle():
     """Tests for Rectangle class."""
-    
+
     @pytest.fixture(params=[(0, 0, 100), (0, 0, 100, 100, 100)], ids=['not enough', 'too much'])
     def invalid_rectangle_bbox(self, request):
         """Returns invalid rectangle bbox parameters."""

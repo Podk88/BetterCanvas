@@ -9,6 +9,8 @@ class Item():
     
     All non abstract subclasses must implement _get_new_id method."""
 
+    config_options = ['fill']
+
     def __init__(self, **kwargs):
         """Creates an Item instance that belongs to canvas Canvas."""
         
@@ -47,6 +49,19 @@ class Item():
     def tags(self, new_tags):
         """Replaces all tags attached to the item."""
         self.canvas.itemconfig(self.id, tags=new_tags)
+
+    def __getattr__(self, name):
+        """Return property of the item."""
+        if name in self.config_options:
+            return self.canvas.itemcget(self.id, name)
+        raise AttributeError(f"{self} has no attribute {name}.")
+
+    def __setattr__(self, name, value):
+        if name in self.config_options:
+            self.canvas.itemconfig(self.id, {name:value})
+        else:
+            super().__setattr__(name, value)
+
 class Rectangle(Item):
     """Rectangle canvas item."""
 

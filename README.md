@@ -1,3 +1,5 @@
+WORK IN PROGRESS
+
 `BetterCanvas` is a wrapper around `tkinter.Canvas` class.
 
 When you add an items to `tkinter.Canvas` it returns an `int` that serves as a new item identifier. 

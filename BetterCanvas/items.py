@@ -9,12 +9,12 @@ class Item():
     
     All non abstract subclasses must implement _get_new_id method."""
 
-    def __init__(self, canvas: tk.Canvas, **kwargs):
+    def __init__(self, **kwargs):
         """Creates an Item instance that belongs to canvas Canvas."""
+        
+        self.tags = kwargs.pop("tags", ())
+
         super().__init__(**kwargs)
-        if canvas == None:
-            raise TypeError("Parameter canvas must be not None.")
-        self.canvas = canvas
 
     def move(self, dx, dy):
         """Moves canvas item by the provided offset."""
@@ -30,8 +30,10 @@ class Rectangle(Item):
     def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
         if len(bbox) != 4:
             raise TypeError(f"Rectangle class expects 4 values as its bounding box. {len(bbox)} were given.")
-        super().__init__(canvas, **kwargs)
+        self.canvas = canvas
         self.id = self._get_new_id(*bbox, **kwargs)
+        super().__init__(**kwargs)
+        
 
     def _get_new_id(self, *bbox, **options) -> int:
         """Creates a new id of rectangle item on self.canvas."""

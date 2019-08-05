@@ -10,21 +10,12 @@ class ItemWithoutCreateOnCanvasMethod(bc.Item):
 
 class TestBetterCanvas():
 
-    item_types = [bc.Rectangle]
-
-    @pytest.fixture(params=item_types, ids=[type.__name__ for type in item_types])
-    def item_type(self, request):
-        return request.param
-
-    def test_create_rectangle(self, test_canvas):
+    def test_create_rectangle(self, better_canvas):
         """create_rectangle method should return bc.Rectangle object."""
-        rectangle = test_canvas.create_rectangle(0, 0, 100, 100)
+        rectangle = better_canvas.create_rectangle(0, 0, 100, 100)
         assert type(rectangle) == bc.Rectangle
 
-    def test_create_item(self, test_canvas, item_type):
+    def test_create_item(self, better_canvas, item_type):
         """create_item method should return an object of the correct type."""
-        new_item = test_canvas.create_item(item_type, 0, 0, 100, 100)
+        new_item = better_canvas.create_item(item_type, 0, 0, 100, 100)
         assert type(new_item) == item_type
-
-
-

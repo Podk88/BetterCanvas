@@ -9,14 +9,12 @@ class Item():
     
     All non abstract subclasses must implement _get_new_id method."""
 
-    config_options = ['fill']
+    config_options=[]
 
-    def __init__(self, **kwargs):
+    def __init__(self, **items):
         """Creates an Item instance that belongs to canvas Canvas."""
-        
-        self.tags = kwargs.pop("tags", ())
-
-        super().__init__(**kwargs)
+        self.init_options(**items)
+        super().__init__(**self.get_other_options(**items))
 
     def move(self, dx, dy):
         """Moves canvas item by the provided offset."""
@@ -25,6 +23,24 @@ class Item():
     def _get_new_id(self, *args, **options) -> int:
         """Creates a new item on self.canvas and returns its id."""
         raise NotImplementedError
+
+    def init_options(self, **options):
+        """Set the given options of the item.
+        
+        Args:
+            options: {option : value}."""
+        for option, value in options.items():
+            setattr(self, option, value)
+
+    @classmethod
+    def get_create_options(cls, **options):
+        """Returns only options relevant to the class."""
+        return {option : value for option, value in options.items() if option in cls.config_options}
+
+    @classmethod
+    def get_other_options(cls, **options):
+        """Return options not relevant to the current class."""
+        return {option : value for option, value in options.items() if option not in cls.config_options}
 
     @property
     def bbox(self):
@@ -69,13 +85,107 @@ class Rectangle(Item):
         if len(bbox) != 4:
             raise TypeError(f"Rectangle class expects 4 values as its bounding box. {len(bbox)} were given.")
         self.canvas = canvas
-        self.id = self._get_new_id(*bbox, **kwargs)
+        self.id = self._get_new_id(*bbox)
         super().__init__(**kwargs)
         
+    config_options = ['tags']
 
     def _get_new_id(self, *bbox, **options) -> int:
         """Creates a new id of rectangle item on self.canvas."""
         return self.canvas.create_rectangle(*bbox, **options)
+
+
+class Arc(Item):
+    """Arc canvas item."""
+
+    config_options = [
+        'activedash',
+        'activefill',
+        'activeoutlin',
+        'activeoutlinestipple',
+        'activestipple',
+        'activewidth',
+        'dash',
+        'dashoffset',
+        'disableddash',
+        'disabledfill',
+        'disabledoutline',
+        'disabledoutlinestipple',
+        'disabledstipple',
+        'disabledwidth',
+        'extent',
+        'fill',
+        'offset',
+        'outline',
+        'outlineoffset',
+        'outlinestipple',
+        'start',
+        'state',
+        'stipple',
+        'style',
+        'tags',
+        'width'
+    ]
+
+    def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
+        if len(bbox) != 4:
+            raise TypeError(f"Arc class expects 4 values as its bounding box. {len(bbox)} were given.")
+        self.canvas = canvas
+        self.id = self._get_new_id(*bbox)
+        super().__init__(**kwargs)
+
+    def _get_new_id(self, *bbox) -> int:
+        """Creates a new id of arc item on self.canvas."""
+        return self.canvas.create_arc(*bbox)
+
+class Bitmap(Item):
+    """Bitmap canvas item."""
     
+    config_option = [
+        'activebackground',
+        'activebitmap',
+        'activeforeground',
+        'anchor',
+        'background',
+        'bitmap',
+        'disabledbackground',
+        'disabledbitmap',
+        'disabledforeground',
+        'foreground',
+        'state',
+        'tags'
+    ]
 
+    def __init__(self, canvas: tk.Canvas, *position, **kwargs):
+        if len(position) != 2:
+            raise TypeError(f"Image class expects 2 values as its position box. {len(position)} were given.")
+        self.canvas = canvas
+        self.id = self._get_new_id(*position)
+        super().__init__(**kwargs)
 
+    def _get_new_id(self, *position) -> int:
+        """Creates a bitmap item on self.canvas and returns its id."""
+        return self.canvas.create_bitmap(*position)
+
+class Image(Item):
+    """Image canvas item."""
+    
+    config_option = [
+        'activeimage',
+        'anchor',
+        'disabledimage',
+        'image',
+        'state',
+        'tags'
+    ]
+
+    def __init__(self, canvas: tk.Canvas, *position, **kwargs):
+        if len(position) != 2:
+            raise TypeError(f"Image class expects 2 values as its position. {len(position)} were given.")
+        self.canvas = canvas
+        self.id = self._get_new_id(*position)
+        super().__init__(**kwargs)
+
+    def _get_new_id(self, *position) -> int:
+        """Creates a image item on self.canvas and returns its id."""
+        return self.canvas.create_image(*position) 

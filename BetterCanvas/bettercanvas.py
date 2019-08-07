@@ -21,6 +21,15 @@ class BetterCanvas():
     def create_rectangle(self, *bbox, **options) -> items.Rectangle:
         return self.create_item(items.Rectangle, *bbox, **options)
 
+    def create_arc(self, *bbox, **options) -> items.Arc:
+        return self.create_item(items.Arc, *bbox, **options)
+
+    def create_bitmap(self, *position, **options) -> items.Bitmap:
+        return self.create_item(items.Bitmap, *position, **options)
+
+    def create_image(self, *position, **options) -> items.Bitmap:
+        return self.create_item(items.Image, *position, **options)
+
     def create_item(self, item_type, *args, **kwargs) -> items.Item:
         """Returns new item of the given type.
 

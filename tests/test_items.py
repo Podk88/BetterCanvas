@@ -7,7 +7,8 @@ class MockItem(bc.Item):
 
     def __init__(self, canvas, **kwargs):
         self.canvas = canvas
-        self.id = self._get_new_id(0, 0, 100, 100)
+        options = self.get_create_options(**kwargs)
+        self.id = self._get_new_id(0, 0, 100, 100, **options)
         return super().__init__(**kwargs)
 
     def _get_new_id(self, *bbox, **options):
@@ -27,12 +28,10 @@ def test_coords(mock_item):
 class TestItemConfig():
 
     def test_unknown_option(self, mock_item):
+        """Accessing an option outside of config_option should rise an error."""
         with pytest.raises(AttributeError):
             mock_item.not_an_option
 
-    def test_fill(self, mock_item):
-        mock_item.fill = 'red'
-        assert mock_item.fill == 'red'
 
 
 class TestTags():
@@ -47,22 +46,18 @@ class TestTags():
         return MockItem(test_canvas.canvas)
 
     def test_init_w_tags(self, tk_canvas, tags):
-        item = MockItem(tk_canvas, tags=tags)
+        item = bc.Rectangle(tk_canvas, 0, 0, 100, 100, tags=tags)
         assert item.tags == tags
         for tag in tags:
             assert tk_canvas.find_withtag(tag) == (item.id, )
 
     def test_set_no_tags(self, tk_canvas, tags):
-        item = MockItem(tk_canvas, tags=tags)
+        item = bc.Rectangle(tk_canvas, 0, 0, 100, 100, tags=tags)
 
         item.tags = ()
         assert item.tags == ()
         for tag in tags:
             assert tk_canvas.find_withtag(tag) == ()
-
-    
-
-
 
 class TestRectangle():
     """Tests for Rectangle class."""
@@ -81,5 +76,23 @@ class TestRectangle():
         """Creating a rectangle should return a bc.Rectangle instance."""
         rectangle = better_canvas.create_item(bc.Rectangle, 0, 0, 100, 100)
         assert type(rectangle) == bc.Rectangle
+        assert better_canvas.type(rectangle.id) == 'rectangle'
+
+
+class TestArc():
+    """Tests for Arc class."""
+
+    def test_create_with_create_item(self, better_canvas):
+        """Creating a rectangle should return a bc.Rectangle instance."""
+        arc = better_canvas.create_item(bc.Arc, 0, 0, 100, 100)
+        assert type(arc) == bc.Arc
+
+class TestBitmap():
+    """Tests for Bitmap class."""
+
+    def test_create_with_create_item(self, better_canvas):
+        """Creating a rectangle should return a bc.Rectangle instance."""
+        bitmap = better_canvas.create_item(bc.Bitmap, 0, 0)
+        assert type(bitmap) == bc.Bitmap
 
 

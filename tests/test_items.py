@@ -119,6 +119,3 @@ class TestPolygon():
         image = better_canvas.create_item(bc.Polygon, 0, 0, 100, 100)
         assert type(image) == bc.Polygon
 
-
-
-

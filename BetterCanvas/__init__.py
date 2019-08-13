@@ -1,5 +1,3 @@
 from .bettercanvas import BetterCanvas
-from .items import Item, Rectangle, Arc, Bitmap, Image, Line, Oval, Polygon
-
-
-
+from .items import (Arc, Bitmap, Image, Item, Line, Oval, Polygon, Rectangle,
+                    Text, Window)

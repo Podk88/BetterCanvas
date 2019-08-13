@@ -83,7 +83,7 @@ class Rectangle(Item):
 
     def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
         if len(bbox) != 4:
-            raise TypeError(f"Rectangle class expects 4 values as its bounding box. {len(bbox)} were given.")
+            raise TypeError(f"Rectangle item expects 4 values as its bounding box. {len(bbox)} were given.")
         self.canvas = canvas
         self.id = self._get_new_id(*bbox)
         super().__init__(**kwargs)
@@ -151,7 +151,7 @@ class Arc(Item):
 
     def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
         if len(bbox) != 4:
-            raise TypeError(f"Arc class expects 4 values as its bounding box. {len(bbox)} were given.")
+            raise TypeError(f"Arc item expects 4 values as its bounding box. {len(bbox)} were given.")
         self.canvas = canvas
         self.id = self._get_new_id(*bbox)
         super().__init__(**kwargs)
@@ -180,7 +180,7 @@ class Bitmap(Item):
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:
-            raise TypeError(f"Image class expects 2 values as its position box. {len(position)} were given.")
+            raise TypeError(f"Image item expects 2 values as its position box. {len(position)} were given.")
         self.canvas = canvas
         self.id = self._get_new_id(*position)
         super().__init__(**kwargs)
@@ -203,7 +203,7 @@ class Image(Item):
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:
-            raise TypeError(f"Image class expects 2 values as its position. {len(position)} were given.")
+            raise TypeError(f"Image item expects 2 values as its position. {len(position)} were given.")
         self.canvas = canvas
         self.id = self._get_new_id(*position)
         super().__init__(**kwargs)
@@ -242,7 +242,7 @@ class Line(Item):
     
         def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
             if len(coords) != 4:
-                raise TypeError(f"Line class expects 4 values as its position. {len(coords)} were given.")
+                raise TypeError(f"Line item expects 4 values as its position. {len(coords)} were given.")
             self.canvas = canvas
             self.id = self._get_new_id(*coords)
             super().__init__(**kwargs)
@@ -282,7 +282,7 @@ class Oval(Item):
     
         def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
             if len(bbox) != 4:
-                raise TypeError(f"Oval class expects 4 values as its position. {len(bbox)} were given.")
+                raise TypeError(f"Oval item expects 4 values as its position. {len(bbox)} were given.")
             self.canvas = canvas
             self.id = self._get_new_id(*bbox)
             super().__init__(**kwargs)
@@ -324,7 +324,7 @@ class Polygon(Item):
     
         def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
             if len(coords) % 2 != 0:
-                raise TypeError(f"Polygon class expects an even number of coordinates. {len(coords)} were given.")
+                raise TypeError(f"Polygon item expects an even number of coordinates. {len(coords)} were given.")
             self.canvas = canvas
             self.id = self._get_new_id(*coords)
             super().__init__(**kwargs)
@@ -332,3 +332,55 @@ class Polygon(Item):
         def _get_new_id(self, *coords) -> int:
             """Creates an oval item on self.canvas and returns its id."""
             return self.canvas.create_polygon(*coords) 
+
+class Text(Item):
+        """Text canvas item."""
+        
+        config_option = ['activefill',
+        'activestipple',
+        'anchor',
+        'disabledfill',
+        'disabledstipple',
+        'fill',
+        'font',
+        'justify',
+        'offset',
+        'state',
+        'stipple',
+        'tags',
+        'text',
+        'width',
+        ]
+    
+        def __init__(self, canvas: tk.Canvas, *position, **kwargs):
+            if len(position) != 2:
+                raise TypeError(f"Text item expects 2 arguments as its coordinates. {len(position)} were given.")
+            self.canvas = canvas
+            self.id = self._get_new_id(*position)
+            super().__init__(**kwargs)
+    
+        def _get_new_id(self, *position) -> int:
+            """Creates an text item on self.canvas and returns its id."""
+            return self.canvas.create_text(*position) 
+
+class Window(Item):
+        """Window canvas item is used to place another widget on the canvas."""
+        
+        config_option = ['anchor',
+        'height',
+        'state',
+        'tags',
+        'width',
+        'window',
+        ]
+    
+        def __init__(self, canvas: tk.Canvas, *position, **kwargs):
+            if len(position) != 2:
+                raise TypeError(f"Window item expects 2 arguments as its coordinates. {len(position)} were given.")
+            self.canvas = canvas
+            self.id = self._get_new_id(*position)
+            super().__init__(**kwargs)
+    
+        def _get_new_id(self, *position) -> int:
+            """Creates an text item on self.canvas and returns its id."""
+            return self.canvas.create_window(*position) 

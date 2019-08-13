@@ -33,11 +33,17 @@ class BetterCanvas():
     def create_line(self, *coords, **options) -> items.Line:
         return self.create_item(items.Line, *coords, **options)  
     
-    def create_oval(self, *bbox, **options) -> items.Line:
+    def create_oval(self, *bbox, **options) -> items.Oval:
         return self.create_item(items.Oval, *bbox, **options)  
 
-    def create_polygon(self, *coords, **options) -> items.Line:
+    def create_polygon(self, *coords, **options) -> items.Polygon:
         return self.create_item(items.Polygon, *coords, **options)
+
+    def create_text(self, *position, **options) -> items.Text:
+        return self.create_item(items.Text, *position, **options)
+    
+    def create_window(self, *position, **options) -> items.Window:
+        return self.create_item(items.Window, *position, **options)        
 
     def create_item(self, item_type, *args, **kwargs) -> items.Item:
         """Returns new item of the given type.

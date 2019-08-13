@@ -4,18 +4,6 @@ import BetterCanvas as bc
 
 class TestBetterCanvas():
 
-    def test_create_rectangle(self, better_canvas):
-        """create_rectangle method should return bc.Rectangle object."""
-        rectangle = better_canvas.create_rectangle(0, 0, 100, 100)
-        assert type(rectangle) == bc.Rectangle
-        assert better_canvas.type(rectangle.id) == 'rectangle'
-
-    def test_create_arc(self, better_canvas):
-        """create_arc should return bc.Arc object."""
-        arc = better_canvas.create_arc(0, 0, 100, 100)
-        assert type(arc) == bc.Arc
-        assert better_canvas.type(arc.id) == 'arc'
-
     bbox = [0, 0, 100, 100]
     position = [100, 100]
     coords = [50, 50, 100, 100]
@@ -26,7 +14,9 @@ class TestBetterCanvas():
         (bc.Image, position),
         (bc.Line, coords),
         (bc.Oval, bbox),
-        (bc.Polygon, coords)
+        (bc.Polygon, coords),
+        (bc.Text, position),
+        (bc.Window, position)
     ]
 
     @pytest.mark.parametrize('item_type, args', values)

@@ -83,7 +83,7 @@ class TestArc():
     """Tests for Arc class."""
 
     def test_create_with_create_item(self, better_canvas):
-        """Creating a rectangle should return a bc.Rectangle instance."""
+        """Creating an arc should return a bc.Arc instance."""
         arc = better_canvas.create_item(bc.Arc, 0, 0, 100, 100)
         assert type(arc) == bc.Arc
 
@@ -91,8 +91,34 @@ class TestBitmap():
     """Tests for Bitmap class."""
 
     def test_create_with_create_item(self, better_canvas):
-        """Creating a rectangle should return a bc.Rectangle instance."""
+        """Creating a bitmap should return a bc.Bitmap instance."""
         bitmap = better_canvas.create_item(bc.Bitmap, 0, 0)
         assert type(bitmap) == bc.Bitmap
+
+class TestImage():
+    """Tests for Image class."""
+
+    def test_create_with_create_item(self, better_canvas):
+        """Creating an image should return a bc.Image instance."""
+        image = better_canvas.create_item(bc.Image, 0, 0)
+        assert type(image) == bc.Image
+
+class TestLine():
+    """Tests for Line class."""
+
+    def test_create_with_create_item(self, better_canvas):
+        """Creating a line should return a bc.Line instance."""
+        image = better_canvas.create_item(bc.Line, 0, 0, 100, 100)
+        assert type(image) == bc.Line
+
+class TestPolygon():
+    """Tests for Polygon class."""
+
+    def test_create_with_create_item(self, better_canvas):
+        """Creating a polygon should return a bc.Polygon instance."""
+        image = better_canvas.create_item(bc.Polygon, 0, 0, 100, 100)
+        assert type(image) == bc.Polygon
+
+
 
 

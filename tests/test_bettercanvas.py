@@ -18,11 +18,15 @@ class TestBetterCanvas():
 
     bbox = [0, 0, 100, 100]
     position = [100, 100]
+    coords = [50, 50, 100, 100]
     values = [
         (bc.Rectangle, bbox),
         (bc.Arc, bbox),
         (bc.Bitmap, position),
-        (bc.Image, position)
+        (bc.Image, position),
+        (bc.Line, coords),
+        (bc.Oval, bbox),
+        (bc.Polygon, coords)
     ]
 
     @pytest.mark.parametrize('item_type, args', values)

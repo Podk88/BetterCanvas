@@ -27,8 +27,17 @@ class BetterCanvas():
     def create_bitmap(self, *position, **options) -> items.Bitmap:
         return self.create_item(items.Bitmap, *position, **options)
 
-    def create_image(self, *position, **options) -> items.Bitmap:
+    def create_image(self, *position, **options) -> items.Image:
         return self.create_item(items.Image, *position, **options)
+
+    def create_line(self, *coords, **options) -> items.Line:
+        return self.create_item(items.Line, *coords, **options)  
+    
+    def create_oval(self, *bbox, **options) -> items.Line:
+        return self.create_item(items.Oval, *bbox, **options)  
+
+    def create_polygon(self, *coords, **options) -> items.Line:
+        return self.create_item(items.Polygon, *coords, **options)
 
     def create_item(self, item_type, *args, **kwargs) -> items.Item:
         """Returns new item of the given type.

@@ -30,7 +30,7 @@ class Item():
         Args:
             options: {option : value}."""
         for option, value in options.items():
-            setattr(self, option, value)
+            self.__setattr__(option, value)
 
     @classmethod
     def get_create_options(cls, **options):
@@ -88,7 +88,29 @@ class Rectangle(Item):
         self.id = self._get_new_id(*bbox)
         super().__init__(**kwargs)
         
-    config_options = ['tags']
+    config_options = ['activedash',
+    'activefill',
+    'activeoutline',
+    'activeoutlinestipple',
+    'activestipple',
+    'activewidth',
+    'dash',
+    'dashoffset',
+    'disableddash',
+    'disabledfill',
+    'disabledoutline',
+    'disabledoutlinestipple',
+    'disabledstipple',
+    'disabledwidth',
+    'fill',
+    'offset',
+    'outline',
+    'outlineoffset',
+    'outlinestipple',
+    'state',
+    'stipple',
+    'tags',
+    'width',]
 
     def _get_new_id(self, *bbox, **options) -> int:
         """Creates a new id of rectangle item on self.canvas."""
@@ -189,3 +211,124 @@ class Image(Item):
     def _get_new_id(self, *position) -> int:
         """Creates a image item on self.canvas and returns its id."""
         return self.canvas.create_image(*position) 
+
+class Line(Item):
+        """Line canvas item."""
+        
+        config_option = [
+            'activedash',
+            'activefill',
+            'activestipple',
+            'activewidth',
+            'arrow',
+            'arrowshape',
+            'capstyle',
+            'dash',
+            'dashoffset',
+            'disableddash',
+            'disabledfill',
+            'disabledstipple',
+            'disabledwidth',
+            'fill',
+            'joinstyle',
+            'offset',
+            'smooth',
+            'splinesteps',
+            'state',
+            'stipple',
+            'tags',
+            'width',
+        ]
+    
+        def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
+            if len(coords) != 4:
+                raise TypeError(f"Line class expects 4 values as its position. {len(coords)} were given.")
+            self.canvas = canvas
+            self.id = self._get_new_id(*coords)
+            super().__init__(**kwargs)
+    
+        def _get_new_id(self, *coords) -> int:
+            """Creates a line item on self.canvas and returns its id."""
+            return self.canvas.create_line(*coords) 
+
+class Oval(Item):
+        """Oval canvas item."""
+        
+        config_option = [
+            'activedash',
+            'activefill',
+            'activeoutline',
+            'activeoutlinestipple',
+            'activestipple',
+            'activewidth',
+            'dash',
+            'dashoffset',
+            'disableddash',
+            'disabledfill',
+            'disabledoutline',
+            'disabledoutlinestipple',
+            'disabledstipple',
+            'disabledwidth',
+            'fill',
+            'offset',
+            'outline',
+            'outlineoffset',
+            'outlinestipple',
+            'state',
+            'stipple',
+            'tags',
+            'width',
+        ]
+    
+        def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
+            if len(bbox) != 4:
+                raise TypeError(f"Oval class expects 4 values as its position. {len(bbox)} were given.")
+            self.canvas = canvas
+            self.id = self._get_new_id(*bbox)
+            super().__init__(**kwargs)
+    
+        def _get_new_id(self, *bbox) -> int:
+            """Creates an oval item on self.canvas and returns its id."""
+            return self.canvas.create_oval(*bbox) 
+
+class Polygon(Item):
+        """Polygon canvas item."""
+        
+        config_option = ['activedash',
+        'activefill',
+        'activeoutline',
+        'activeoutlinestipple',
+        'activestipple',
+        'activewidth',
+        'dash',
+        'dashoffset',
+        'disableddash',
+        'disabledfill',
+        'disabledoutline',
+        'disabledoutlinestipple',
+        'disabledstipple',
+        'disabledwidth',
+        'fill',
+        'joinstyle',
+        'offset',
+        'outline',
+        'outlineoffset',
+        'outlinestipple',
+        'smooth',
+        'splinesteps',
+        'state',
+        'stipple',
+        'tags',
+        'width',
+        ]
+    
+        def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
+            if len(coords) % 2 != 0:
+                raise TypeError(f"Polygon class expects an even number of coordinates. {len(coords)} were given.")
+            self.canvas = canvas
+            self.id = self._get_new_id(*coords)
+            super().__init__(**kwargs)
+    
+        def _get_new_id(self, *coords) -> int:
+            """Creates an oval item on self.canvas and returns its id."""
+            return self.canvas.create_polygon(*coords) 

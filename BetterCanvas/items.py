@@ -82,6 +82,10 @@ class Item():
         """Deletes the underlying item from the canvas."""
         self.canvas.delete(self.id)
 
+    def focus(self):
+        """Sets focus to this item."""
+        self.canvas.focus(self.id)
+
 class Rectangle(Item):
     """Rectangle canvas item."""
 

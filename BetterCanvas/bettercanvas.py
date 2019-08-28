@@ -115,4 +115,8 @@ class BetterCanvas():
         """Finds all items having the given tag."""
         raise NotImplementedError
 
+    def focus(self):
+        """Returns the item that currently has focus."""
+        raise NotImplementedError
+
     

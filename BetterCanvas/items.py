@@ -78,6 +78,10 @@ class Item():
         else:
             super().__setattr__(name, value)
 
+    def delete(self):
+        """Deletes the underlying item from the canvas."""
+        self.canvas.delete(self.id)
+
 class Rectangle(Item):
     """Rectangle canvas item."""
 

@@ -367,6 +367,15 @@ class Text(Item):
         """Creates an text item on self.canvas and returns its id."""
         return self.canvas.create_text(*position) 
 
+    def dchars(self, start, to=None):
+        """Deletes text.
+        
+        Args:
+            start: Where to start deleting text.
+            to: Where to stop deleting text. 
+            If omitted, a single character is removed."""
+        self.canvas.dchars(start, to)
+
 class Window(Item):
     """Window canvas item is used to place another widget on the canvas."""
     

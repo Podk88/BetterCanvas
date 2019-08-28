@@ -52,3 +52,67 @@ class BetterCanvas():
             item_type: type of the item that will be created.
         """
         return item_type(self.canvas, *args, **kwargs)
+
+    def find_above(item):
+        """Returns the item just above the given item.
+
+        Args:
+            item: Reference item. """
+        raise NotImplementedError
+
+    def find_below(item):
+        """Returns the item just below the given item.
+
+        Args:
+            item: Reference item. """
+        raise NotImplementedError
+
+    def find_closest(self, x, y, halo=None, start=None):
+
+        """Returns the item closest to the given position. 
+        
+        Position is given in canvas coordinates. 
+        Always succeeds if there’s at least one item in the canvas. 
+        To find items within a certain distance from a position, 
+        use find_overlapping with a small rectangle centered on the position.
+
+        Args:
+            x: Horizontal screen coordinate.
+            y: Vertical screen coordinate.
+            halo: Optional halo distance.
+            start: Optional start item.
+        Returns:
+            Item instance. """
+        raise NotImplementedError
+    
+    def find_enclosed(self, x1, y1, x2, y2):
+        """Finds all items completely enclosed by the rectangle (x1, y1, x2, y2).
+
+        Args:
+            x1: Left edge.
+            y1: Upper edge.
+            x2: Right edge.
+            y2: Lower edge.
+        Returns:
+            A tuple containing all matching items. """
+        raise NotImplementedError
+    
+    
+    def find_overlapping(self, x1, y1, x2, y2):
+        """Finds all items that overlap the given rectangle, or that are completely enclosed by it.
+
+        Args:
+            x1: Left edge.
+            y1: Upper edge.
+            x2: Right edge.
+            y2: Lower edge.
+        Returns:
+            A tuple containing all matching items. """
+        raise NotImplementedError
+
+    
+    def find_withtag(self, tag):
+        """Finds all items having the given tag."""
+        raise NotImplementedError
+
+    

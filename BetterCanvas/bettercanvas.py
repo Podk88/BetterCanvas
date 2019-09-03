@@ -9,6 +9,7 @@ class BetterCanvas():
     def __init__(self, master=None, **kw):
         """Create a BetterCanvas widget with parent master."""
         self.canvas = tk.Canvas(master=master, **kw)
+        self.items = {}
         super().__init__()
 
     def __getattr__(self, name):
@@ -51,7 +52,9 @@ class BetterCanvas():
         Args:
             item_type: type of the item that will be created.
         """
-        return item_type(self.canvas, *args, **kwargs)
+        item = item_type(self.canvas, *args, **kwargs)
+        self.items[item.id] = item
+        return item
 
     def find_above(item):
         """Returns the item just above the given item.

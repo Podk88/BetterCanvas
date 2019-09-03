@@ -69,7 +69,7 @@ class BetterCanvas():
         below_id = self.canvas.find_below(item.od)
         return self.items[below_id]
 
-    def find_closest(self, x, y, halo=None, start=None):
+    def find_closest(self, x, y, halo=None, start=None) -> items.Item:
         """Returns the item closest to the given position. 
         
         Position is given in canvas coordinates. 
@@ -84,7 +84,8 @@ class BetterCanvas():
             start: Optional start item.
         Returns:
             Item instance. """
-        raise NotImplementedError
+        item_id = self.canvas.find_closest(x, y, halo, start)
+        return self.items[item_id]
     
     def find_enclosed(self, x1, y1, x2, y2):
         """Finds all items completely enclosed by the rectangle (x1, y1, x2, y2).
@@ -96,7 +97,8 @@ class BetterCanvas():
             y2: Lower edge.
         Returns:
             A tuple containing all matching items. """
-        raise NotImplementedError
+        item_ids = self.canvas.find_enclosed(x1, y1, x2, y2)
+        return tuple(self.items[item_id] for item_id in item_ids)
     
     
     def find_overlapping(self, x1, y1, x2, y2):
@@ -109,12 +111,14 @@ class BetterCanvas():
             y2: Lower edge.
         Returns:
             A tuple containing all matching items. """
-        raise NotImplementedError
+        item_ids = self.canvas.find_overlapping(x1, y1, x2, y2)
+        return tuple(self.items[item_id] for item_id in item_ids)
 
     
     def find_withtag(self, tag):
         """Finds all items having the given tag."""
-        raise NotImplementedError
+        item_ids = self.canvas.find_withtag(tag)
+        return tuple(self.items[item_id] for item_id in item_ids)
 
     def focus(self):
         """Returns the item that currently has focus or None if no item has focus."""

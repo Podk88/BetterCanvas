@@ -56,22 +56,19 @@ class BetterCanvas():
         self.items[item.id] = item
         return item
 
-    def find_above(item):
-        """Returns the item just above the given item.
+    def find_above(self, item: items.Item) -> items.Item:
+        """Returns the item just above the given item or None when none were found."""
+        above_id = self.canvas.find_above(item.od)
+        if above_id in self.items:
+            return self.items[above_id]
 
-        Args:
-            item: Reference item. """
-        raise NotImplementedError
-
-    def find_below(item):
-        """Returns the item just below the given item.
-
-        Args:
-            item: Reference item. """
-        raise NotImplementedError
+    def find_below(self, item: items.Item) -> items.Item:
+        """Returns the item just below the given item or None when none were found."""
+        below_id = self.canvas.find_below(item.od)
+        if below_id in self.items:
+            return self.items[below_id]
 
     def find_closest(self, x, y, halo=None, start=None):
-
         """Returns the item closest to the given position. 
         
         Position is given in canvas coordinates. 

@@ -1,7 +1,10 @@
 """This is a wrapper for tk.Canvas class."""
 
 import tkinter as tk
+from collections import defaultdict
+
 from . import items
+
 
 class BetterCanvas():
     """Wrapper for tk.Canvas."""
@@ -9,7 +12,7 @@ class BetterCanvas():
     def __init__(self, master=None, **kw):
         """Create a BetterCanvas widget with parent master."""
         self.canvas = tk.Canvas(master=master, **kw)
-        self.items = {}
+        self.items = defaultdict(lambda : None)
         super().__init__()
 
     def __getattr__(self, name):
@@ -59,14 +62,12 @@ class BetterCanvas():
     def find_above(self, item: items.Item) -> items.Item:
         """Returns the item just above the given item or None when none were found."""
         above_id = self.canvas.find_above(item.od)
-        if above_id in self.items:
-            return self.items[above_id]
+        return self.items[above_id]
 
     def find_below(self, item: items.Item) -> items.Item:
         """Returns the item just below the given item or None when none were found."""
         below_id = self.canvas.find_below(item.od)
-        if below_id in self.items:
-            return self.items[below_id]
+        return self.items[below_id]
 
     def find_closest(self, x, y, halo=None, start=None):
         """Returns the item closest to the given position. 
@@ -118,8 +119,4 @@ class BetterCanvas():
     def focus(self):
         """Returns the item that currently has focus or None if no item has focus."""
         item_id = self.canvas.focus()
-        if item_id in self.items:
-            return self.items[self.canvas.focus()]
-
-
-    
+        return self.items[item_id]

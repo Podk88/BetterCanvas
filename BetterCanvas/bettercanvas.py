@@ -119,7 +119,10 @@ class BetterCanvas():
         raise NotImplementedError
 
     def focus(self):
-        """Returns the item that currently has focus."""
-        raise NotImplementedError
+        """Returns the item that currently has focus or None if no item has focus."""
+        item_id = self.canvas.focus()
+        if item_id in self.items:
+            return self.items[self.canvas.focus()]
+
 
     

@@ -34,3 +34,12 @@ class TestBetterCanvas():
         assert better_canvas.type(new_item.id) == item_type.__name__.lower()
 
 
+    def test_focus(self, better_canvas):
+        """"""
+        item = better_canvas.create_text(100, 100)
+        assert better_canvas.focus() is None
+        item.focus()
+        assert better_canvas.focus() == item
+
+
+

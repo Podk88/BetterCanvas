@@ -96,7 +96,7 @@ class Rectangle(Item):
         self.id = self._get_new_id(*bbox)
         super().__init__(**kwargs)
         
-    config_options = [
+    config_options = set([
         'activedash',
         'activefill',
         'activeoutline',
@@ -120,7 +120,7 @@ class Rectangle(Item):
         'stipple',
         'tags',
         'width'
-    ]
+    ])
 
     def _get_new_id(self, *bbox, **options) -> int:
         """Creates a new id of rectangle item on self.canvas."""
@@ -130,7 +130,7 @@ class Rectangle(Item):
 class Arc(Item):
     """Arc canvas item."""
 
-    config_options = [
+    config_options = set([
         'activedash',
         'activefill',
         'activeoutlin',
@@ -157,7 +157,7 @@ class Arc(Item):
         'style',
         'tags',
         'width'
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
         if len(bbox) != 4:
@@ -173,7 +173,7 @@ class Arc(Item):
 class Bitmap(Item):
     """Bitmap canvas item."""
     
-    config_option = [
+    config_option = set([
         'activebackground',
         'activebitmap',
         'activeforeground',
@@ -186,7 +186,7 @@ class Bitmap(Item):
         'foreground',
         'state',
         'tags'
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:
@@ -202,14 +202,14 @@ class Bitmap(Item):
 class Image(Item):
     """Image canvas item."""
     
-    config_option = [
+    config_option = set([
         'activeimage',
         'anchor',
         'disabledimage',
         'image',
         'state',
         'tags'
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:
@@ -225,7 +225,7 @@ class Image(Item):
 class Line(Item):
     """Line canvas item."""
         
-    config_option = [
+    config_option = set([
         'activedash',
         'activefill',
         'activestipple',
@@ -248,7 +248,7 @@ class Line(Item):
         'stipple',
         'tags',
         'width',
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
         if len(coords) != 4:
@@ -264,7 +264,7 @@ class Line(Item):
 class Oval(Item):
     """Oval canvas item."""
     
-    config_option = [
+    config_option = set([
         'activedash',
         'activefill',
         'activeoutline',
@@ -288,7 +288,7 @@ class Oval(Item):
         'stipple',
         'tags',
         'width',
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *bbox, **kwargs):
         if len(bbox) != 4:
@@ -304,7 +304,7 @@ class Oval(Item):
 class Polygon(Item):
     """Polygon canvas item."""
     
-    config_option = [
+    config_option = set([
         'activedash',
         'activefill',
         'activeoutline',
@@ -331,7 +331,7 @@ class Polygon(Item):
         'stipple',
         'tags',
         'width',
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *coords, **kwargs):
         if len(coords) % 2 != 0:
@@ -347,7 +347,7 @@ class Polygon(Item):
 class Text(Item):
     """Text canvas item."""
     
-    config_option = [
+    config_option = set([
         'activefill',
         'activestipple',
         'anchor',
@@ -362,7 +362,7 @@ class Text(Item):
         'tags',
         'text',
         'width',
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:
@@ -387,14 +387,14 @@ class Text(Item):
 class Window(Item):
     """Window canvas item is used to place another widget on the canvas."""
     
-    config_option = [
+    config_option = set([
         'anchor',
         'height',
         'state',
         'tags',
         'width',
         'window',
-    ]
+    ])
 
     def __init__(self, canvas: tk.Canvas, *position, **kwargs):
         if len(position) != 2:

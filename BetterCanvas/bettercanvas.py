@@ -10,6 +10,7 @@ from . import items
 class BetterCanvas():
     """Wrapper for tk.Canvas."""
 
+    # A list of methods that should not be forwarded to the wrapped object.
     forbidden = set([
         "addtag", "addtag_above", "addtag_below", "addtag_all", "addtag_closest",
         "addtag_enclosed", "addtag_overlapped", "addtag_withtag",

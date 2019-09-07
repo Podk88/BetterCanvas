@@ -3,6 +3,7 @@
 Items can be created with BetterCanvas create_x methods or on their own."""
 
 import tkinter as tk
+from functools import wraps
 
 class Item():
     """Base class for all item classes.
@@ -11,14 +12,21 @@ class Item():
 
     config_options=[]
 
+    def forward(method):
+        """Forward method calls to the canvas instance and supply the correct item id."""
+        @wraps(method)
+        def forwarded(self, *args, **kwargs):
+            return getattr(self.canvas, method.__name__)(self.id, *args, **kwargs)
+        return forwarded
+
     def __init__(self, **items):
         """Creates an Item instance that belongs to canvas Canvas."""
         self.init_options(**items)
         super().__init__(**self.get_other_options(**items))
 
+    @forward
     def move(self, dx, dy):
         """Moves canvas item by the provided offset."""
-        self.canvas.move(self.id, dx, dy)
 
     def _get_new_id(self, *args, **options) -> int:
         """Creates a new item on self.canvas and returns its id."""
@@ -43,18 +51,21 @@ class Item():
         return {option : value for option, value in options.items() if option not in cls.config_options}
 
     @property
+    @forward
     def bbox(self):
-        return self.canvas.bbox(self.id)
+        """The bounding box, as a 4-tuple.
+        Note that the bounding box is approximate and may differ a few pixels from the real value.
+        """ 
 
     @property
+    @forward
     def coords(self):
         """Returns the coordinates of the item."""
-        return self.canvas.coords(self.id)
     
     @coords.setter
+    @forward
     def coords(self, *newcoords):
         """Sets the coordinates of the item."""
-        self.canvas.coords(self.id, *newcoords)
 
     @property
     def tags(self):
@@ -78,13 +89,13 @@ class Item():
         else:
             super().__setattr__(name, value)
 
+    @forward
     def delete(self):
         """Deletes the underlying item from the canvas."""
-        self.canvas.delete(self.id)
 
+    @forward
     def focus(self):
         """Sets focus to this item."""
-        self.canvas.focus(self.id)
 
 class Rectangle(Item):
     """Rectangle canvas item."""
@@ -375,6 +386,7 @@ class Text(Item):
         """Creates an text item on self.canvas and returns its id."""
         return self.canvas.create_text(*position) 
 
+    @Item.forward
     def dchars(self, start, to=None):
         """Deletes text.
         
@@ -382,12 +394,12 @@ class Text(Item):
             start: Where to start deleting text.
             to: Where to stop deleting text. 
             If omitted, a single character is removed."""
-        self.canvas.dchars(start, to)
 
+    @Item.forward
     def icursor(self, index):
         """Moves the insertion cursor to the given position."""
-        self.canvas.icursor(self.id, index)
     
+    @Item.forward
     def index(self, index):
         """Gets the numerical cursor index corresponding to the given index. 
         
@@ -406,8 +418,8 @@ class Text(Item):
         Returns:
             A numerical index (an integer).
         """
-        return self.canvas.index(self.id, index)
 
+    @Item.forward
     def insert(self, index, text):
         """Inserts text into an item.
         
@@ -417,7 +429,6 @@ class Text(Item):
                 If you insert text at the INSERT index, the cursor is moved along with the text. 
             text: The text to insert.
         """
-        return self.canvas.insert(self.id, index, text)
 
 class Window(Item):
     """Window canvas item is used to place another widget on the canvas."""

@@ -5,9 +5,19 @@ from collections import defaultdict
 
 from . import items
 
+#TODO: bbox, delete
 
 class BetterCanvas():
     """Wrapper for tk.Canvas."""
+
+    forbidden = set([
+        "addtag", "addtag_above", "addtag_below", "addtag_all", "addtag_closest",
+        "addtag_enclosed", "addtag_overlapped", "addtag_withtag",
+        "coords", "dchars", "dtags", "gettags", "icursor", "index", "insert",
+        "itemcget", "itemconfig", "itemconfigure", "lift", "lower", "move", 
+        "select_adjust", "select_clear", "select_from", "select_item", "select_to",
+        "tkraise", "type",
+    ])
 
     def __init__(self, master=None, **kw):
         """Create a BetterCanvas widget with parent master."""
@@ -17,6 +27,8 @@ class BetterCanvas():
 
     def __getattr__(self, name):
         """Forward attribute look up to inner instance."""
+        if name in self.forbidden:
+            raise AttributeError(f"Functionality behind {name} was moved to Item class or deprecated.)")
         if hasattr(self.canvas, name):
             return getattr(self.canvas, name)
         else:

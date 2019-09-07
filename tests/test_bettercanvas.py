@@ -24,14 +24,14 @@ class TestBetterCanvas():
         """create_item method should return an object of the correct type."""
         new_item = better_canvas.create_item(item_type, *args)
         assert type(new_item) == item_type
-        assert better_canvas.type(new_item.id) == item_type.__name__.lower()
+        assert better_canvas.canvas.type(new_item.id) == item_type.__name__.lower()
 
     @pytest.mark.parametrize('item_type, args', values)
     def test_create_x_method(self, better_canvas, item_type, args):
         """create_item method should return an object of the correct type."""
         new_item = getattr(better_canvas, f'create_{item_type.__name__.lower()}')(*args)
         assert type(new_item) == item_type
-        assert better_canvas.type(new_item.id) == item_type.__name__.lower()
+        assert better_canvas.canvas.type(new_item.id) == item_type.__name__.lower()
 
 
     def test_focus(self, better_canvas):

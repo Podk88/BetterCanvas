@@ -76,7 +76,7 @@ class TestRectangle():
         """Creating a rectangle should return a bc.Rectangle instance."""
         rectangle = better_canvas.create_item(bc.Rectangle, 0, 0, 100, 100)
         assert type(rectangle) == bc.Rectangle
-        assert better_canvas.type(rectangle.id) == 'rectangle'
+        assert better_canvas.canvas.type(rectangle.id) == 'rectangle'
 
 
 class TestArc():

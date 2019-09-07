@@ -384,6 +384,41 @@ class Text(Item):
             If omitted, a single character is removed."""
         self.canvas.dchars(start, to)
 
+    def icursor(self, index):
+        """Moves the insertion cursor to the given position."""
+        self.canvas.icursor(self.id, index)
+    
+    def index(self, index):
+        """Gets the numerical cursor index corresponding to the given index. 
+        
+        Numerical indexes work like Python’s sequence indexes; 
+        0 is just to the left of the first character, 
+        and len(text) is just to the right of the last character.
+        
+        Args:
+            index: An index. 
+                You can use a numerical index, or one of the following:
+                INSERT (the current insertion cursor), 
+                END (the length of the text), 
+                SEL_FIRST and SEL_LAST (the selection start and end). 
+                “@x,y” where x and y are canvas coordinates, 
+                to get the index closest to the given coordinate.
+        Returns:
+            A numerical index (an integer).
+        """
+        return self.canvas.index(self.id, index)
+
+    def insert(self, index, text):
+        """Inserts text into an item.
+        
+        Args:
+            index: Where to insert the text. This can be either a numerical index or a symbolic constant. 
+                See the description of the index method for details. 
+                If you insert text at the INSERT index, the cursor is moved along with the text. 
+            text: The text to insert.
+        """
+        return self.canvas.insert(self.id, index, text)
+
 class Window(Item):
     """Window canvas item is used to place another widget on the canvas."""
     

@@ -173,7 +173,7 @@ class Arc(Item):
 class Bitmap(Item):
     """Bitmap canvas item."""
     
-    config_option = set([
+    config_options = set([
         'activebackground',
         'activebitmap',
         'activeforeground',
@@ -202,7 +202,7 @@ class Bitmap(Item):
 class Image(Item):
     """Image canvas item."""
     
-    config_option = set([
+    config_options = set([
         'activeimage',
         'anchor',
         'disabledimage',
@@ -225,7 +225,7 @@ class Image(Item):
 class Line(Item):
     """Line canvas item."""
         
-    config_option = set([
+    config_options = set([
         'activedash',
         'activefill',
         'activestipple',
@@ -264,7 +264,7 @@ class Line(Item):
 class Oval(Item):
     """Oval canvas item."""
     
-    config_option = set([
+    config_options = set([
         'activedash',
         'activefill',
         'activeoutline',
@@ -304,7 +304,7 @@ class Oval(Item):
 class Polygon(Item):
     """Polygon canvas item."""
     
-    config_option = set([
+    config_options = set([
         'activedash',
         'activefill',
         'activeoutline',
@@ -347,7 +347,7 @@ class Polygon(Item):
 class Text(Item):
     """Text canvas item."""
     
-    config_option = set([
+    config_options = set([
         'activefill',
         'activestipple',
         'anchor',
@@ -422,7 +422,7 @@ class Text(Item):
 class Window(Item):
     """Window canvas item is used to place another widget on the canvas."""
     
-    config_option = set([
+    config_options = set([
         'anchor',
         'height',
         'state',

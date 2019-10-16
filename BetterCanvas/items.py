@@ -97,6 +97,20 @@ class Item():
     def focus(self):
         """Sets focus to this item."""
 
+    def bind(self, event, callback, add=False):
+        """Adds an event binding to the item.
+
+        Args:
+            event (str): Event descriptor.
+            callback (callable): Callable to bind to the event.
+            add (bool): Add new binding to any existing bindings or replace them, defaults to replace.
+        """
+        if add:
+            add = "+"
+        else:
+            add = None
+        self.canvas.tag_bind(self.id, event, callback, add)
+
 class Rectangle(Item):
     """Rectangle canvas item."""
 

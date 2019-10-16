@@ -137,3 +137,18 @@ class BetterCanvas():
         """Returns the item that currently has focus or None if no item has focus."""
         item_id = self.canvas.focus()
         return self.items[item_id]
+
+    def tag_bind(self, tag, event, callback, add=False):
+        """Adds event to multiple items that have the specified tag.
+        
+        Args:
+            event (str): Event descriptor.
+            callback (callable): Callable to bind to the event.
+            add (bool): Add new binding to any existing bindings or replace them, defaults to replace.
+        """
+
+        if add:
+            add = "+"
+        else:
+            add = None
+        self.canvas.tag_bind(tag, event, callback, add)

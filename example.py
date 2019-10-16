@@ -14,7 +14,10 @@ rectangle = canvas.create_item(bc.Rectangle, 0, 0, 100, 100)
 rectangle.move(200, 100)
 
 text = canvas.create_text(200, 200, text="Hello world!")
-text.insert(0, "WUB!")
-text.dchars(5,8)
+
+def command(event):
+    text.insert(0, "WUB!")
+
+text.bind("<Button-1>", command)
 
 root.mainloop()

@@ -5,6 +5,13 @@ Items can be created with BetterCanvas create_x methods or on their own."""
 import tkinter as tk
 from functools import wraps
 
+def forward(method):
+    """Forward method calls to the canvas instance and supply the correct item id."""
+    @wraps(method)
+    def forwarded(self, *args, **kwargs):
+        return getattr(self.canvas, method.__name__)(self.id, *args, **kwargs)
+    return forwarded
+
 class Item():
     """Base class for all item classes.
     
@@ -12,12 +19,7 @@ class Item():
 
     config_options=[]
 
-    def forward(method):
-        """Forward method calls to the canvas instance and supply the correct item id."""
-        @wraps(method)
-        def forwarded(self, *args, **kwargs):
-            return getattr(self.canvas, method.__name__)(self.id, *args, **kwargs)
-        return forwarded
+
 
     def __init__(self, **items):
         """Creates an Item instance that belongs to canvas Canvas."""
@@ -400,7 +402,7 @@ class Text(Item):
         """Creates an text item on self.canvas and returns its id."""
         return self.canvas.create_text(*position) 
 
-    @Item.forward
+    @forward
     def dchars(self, start, to=None):
         """Deletes text.
         
@@ -409,11 +411,11 @@ class Text(Item):
             to: Where to stop deleting text. 
             If omitted, a single character is removed."""
 
-    @Item.forward
+    @forward
     def icursor(self, index):
         """Moves the insertion cursor to the given position."""
     
-    @Item.forward
+    @forward
     def index(self, index):
         """Gets the numerical cursor index corresponding to the given index. 
         
@@ -433,7 +435,7 @@ class Text(Item):
             A numerical index (an integer).
         """
 
-    @Item.forward
+    @forward
     def insert(self, index, text):
         """Inserts text into an item.
         
